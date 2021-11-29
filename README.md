@@ -17,11 +17,11 @@ Domino's Discord Bot 🍕
 
 ### Overview
 
-I made this just for fun. It uses Discord interaction features to let you order a pizza in real life. When ordering, sensitive data such as credit card details and you address should <strong>not</strong> be sent in a message, so fill out `Config.cs` if you want to try this out for yourself. I also don't suggesting editing this project to let a user input that sensitive data.
+I made this just for fun. It uses Discord's interaction features to let you order a pizza and have it delivered. When ordering, sensitive data such as credit card details and your address should <strong>not</strong> be sent in a message, so fill out `Config.cs` if you really want to try this out for yourself. I also don't suggest editing this project to let a user input that sensitive data.
 
 ### How to use
 
-Since ordering pizza involves sensitive data such as your address and card details, only one person is allowed to use this bot: you. If you really want to use it, make a new bot in the Discord developer center, fill out the `Config.cs` file, invite the bot to your server, and run it.
+Since ordering pizza involves sensitive data such as your address and card details, only one person is allowed to use this bot: you. If you really want to use it, make a new bot in the [Discord developer center](https://discord.com/developers/applications), fill out the `Config.cs` file, invite the bot to your server, and run it.
 
 ### To Run
 1. Make sure you have [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)   
