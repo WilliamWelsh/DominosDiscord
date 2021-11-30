@@ -13,21 +13,34 @@ namespace DominosDiscord
         // Our order object
         private DiscordOrder Order;
 
+        private DiscordSocketClient _client;
+
         // Initialize
         public async Task MainAsync()
         {
-            var client = new DiscordSocketClient(new DiscordSocketConfig
+            var _client = new DiscordSocketClient(new DiscordSocketConfig
             {
-                LogLevel = LogSeverity.Verbose
+                LogLevel = LogSeverity.Info
             });
 
-            client.Log += Log;
-            client.InteractionCreated += OnInteractionCreated;
+            _client.Log += Log;
+            _client.Ready += OnReady;
+            _client.InteractionCreated += OnInteractionCreated;
 
-            await client.LoginAsync(TokenType.Bot, Config.DiscordToken);
-            await client.StartAsync();
+            await _client.LoginAsync(TokenType.Bot, Config.DiscordToken);
+            await _client.StartAsync();
 
             await Task.Delay(Timeout.Infinite);
+        }
+
+        private async Task OnReady()
+        {
+            // Register the /order command
+            await _client.CreateGlobalApplicationCommandAsync(new SlashCommandBuilder()
+                .WithName("order")
+                .WithDescription("Start an order")
+                .Build());
+            Console.WriteLine("Order command registered (If this is the first time registering, it can take up to an hour to show up in your server. You can try re-inviting the bot to your server to see if it shows up faster)");
         }
 
         private async Task OnInteractionCreated(SocketInteraction interaction)
