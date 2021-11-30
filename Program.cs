@@ -18,17 +18,18 @@ namespace DominosDiscord
         // Initialize
         public async Task MainAsync()
         {
-            var _client = new DiscordSocketClient(new DiscordSocketConfig
+            _client = new DiscordSocketClient(new DiscordSocketConfig
             {
                 LogLevel = LogSeverity.Info
             });
 
             _client.Log += Log;
-            _client.Ready += OnReady;
-            _client.InteractionCreated += OnInteractionCreated;
 
             await _client.LoginAsync(TokenType.Bot, Config.DiscordToken);
             await _client.StartAsync();
+
+            _client.Ready += OnReady;
+            _client.InteractionCreated += OnInteractionCreated;
 
             await Task.Delay(Timeout.Infinite);
         }
