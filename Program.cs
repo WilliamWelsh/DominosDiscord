@@ -37,11 +37,16 @@ namespace DominosDiscord
         private async Task OnReady()
         {
             // Register the /order command
-            await _client.CreateGlobalApplicationCommandAsync(new SlashCommandBuilder()
-                .WithName("order")
-                .WithDescription("Start an order")
-                .Build());
-            Console.WriteLine("Order command registered (If this is the first time registering, it can take up to an hour to show up in your server. You can try re-inviting the bot to your server to see if it shows up faster)");
+
+            var commands = await _client.GetGlobalApplicationCommandsAsync();
+            if (commands.Count == 0)
+            {
+                await _client.CreateGlobalApplicationCommandAsync(new SlashCommandBuilder()
+                    .WithName("order")
+                    .WithDescription("Start an order")
+                    .Build());
+                Console.WriteLine("Order command registered (If this is the first time registering, it can take up to an hour to show up in your server. You can try re-inviting the bot to your server to see if it shows up faster)");
+            }
         }
 
         private async Task OnInteractionCreated(SocketInteraction interaction)
@@ -148,8 +153,6 @@ namespace DominosDiscord
                 default:
                     break;
             }
-
-
         }
 
         private Task Log(LogMessage arg)
