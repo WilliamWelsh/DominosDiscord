@@ -29,7 +29,7 @@ namespace DominosDiscord
             await _client.StartAsync();
 
             _client.Ready += OnReady;
-            _client.InteractionCreated += OnInteractionCreated;
+            _client.InteractionCreated += TryToCompleteInteraction;
 
             await Task.Delay(Timeout.Infinite);
         }
@@ -37,7 +37,6 @@ namespace DominosDiscord
         private async Task OnReady()
         {
             // Register the /order command
-
             var commands = await _client.GetGlobalApplicationCommandsAsync();
             if (commands.Count == 0)
             {
@@ -46,6 +45,19 @@ namespace DominosDiscord
                     .WithDescription("Start an order")
                     .Build());
                 Console.WriteLine("Order command registered (If this is the first time registering, it can take up to an hour to show up in your server. You can try re-inviting the bot to your server to see if it shows up faster)");
+            }
+        }
+
+        private async Task TryToCompleteInteraction(SocketInteraction interaction)
+        {
+            try
+            {
+                await OnInteractionCreated(interaction);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                await interaction.RespondAsync($"Error! {e.Message}", ephemeral: true);
             }
         }
 
