@@ -28,6 +28,8 @@ namespace DominosDiscord
             await _client.LoginAsync(TokenType.Bot, Config.DiscordToken);
             await _client.StartAsync();
 
+            await _client.SetGameAsync("pizzas come out the oven", type: ActivityType.Watching);
+
             _client.Ready += OnReady;
             _client.InteractionCreated += TryToCompleteInteraction;
 
